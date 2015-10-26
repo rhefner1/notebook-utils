@@ -29,7 +29,7 @@ cd /root/Dropbox/notebook
 git config core.fileMode false
 git add --all
 git commit -m $(date +'%Y-%m-%d') --author "Ryan Hefner <rhefner1@gmail.com>"
-git push -f origin master
+git push origin master
 
 # Wait until Dropbox is finished syncing before finishing
 wait_for_dropbox

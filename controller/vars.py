@@ -26,7 +26,7 @@ INSTANCE_CONFIG = """
       "type": "PERSISTENT",
       "boot": true,
       "mode": "READ_WRITE",
-      "deviceName": "nv-worker-1",
+      "deviceName": "nv-worker-2",
       "autoDelete": true,
       "initializeParams": {
         "sourceImage": "https://www.googleapis.com/compute/v1/projects/notebook-versioner/global/images/notebook-versioner-base",

@@ -1,5 +1,5 @@
 cron:
 - description: create a vm
   url: /create
-  schedule: every day 11:50
+  schedule: every day 23:50
   timezone: America/New_York
