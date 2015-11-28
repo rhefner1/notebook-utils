@@ -13,6 +13,8 @@ from oauth2client.appengine import AppAssertionCredentials
 
 from controller import nv_vars
 
+STARTUP_SCRIPT_FILE = 'notebook_versioner.sh'
+
 
 def get_credentials():
     """Authorizes a request to Google Cloud Platform."""
@@ -27,7 +29,9 @@ class CreateVM(webapp2.RequestHandler):
     def get(self):
         """Handles the creation of instances."""
         unique_id = str(uuid.uuid4())[:6]
-        instance_config = nv_vars.INSTANCE_CONFIG % unique_id
+        with open(STARTUP_SCRIPT_FILE, 'r') as ss_file:
+            startup_script = ss_file.read()
+        instance_config = nv_vars.INSTANCE_CONFIG % (unique_id, startup_script)
 
         compute = get_credentials()
         compute.instances().insert(

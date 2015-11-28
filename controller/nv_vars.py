@@ -11,7 +11,7 @@ INSTANCE_CONFIG = """
     "items": [
       {
         "key": "startup-script",
-        "value": "/root/notebook_versioner.sh"
+        "value": '%s'
       },
       {
         "key": "sshKeys",
