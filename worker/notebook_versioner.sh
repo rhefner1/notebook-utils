@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 wait_for_dropbox() {
+  echo "Starting dropboxd"
+  /root/dropbox.py start
+
   echo "Waiting for Dropbox to sync..."
   i=0
   while [ "$(/root/dropbox.py status)" != 'Up to date' ]
@@ -14,12 +17,12 @@ wait_for_dropbox() {
     sleep 2;
 
   done
+
+  echo "Stopping dropboxd"
+  /root/dropbox.py stop
 }
 
 echo "Starting notebook versioner."
-
-echo "Starting dropboxd"
-/root/dropbox.py start
 
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
