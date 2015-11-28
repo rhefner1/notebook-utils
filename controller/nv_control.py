@@ -5,13 +5,12 @@ import json
 import logging
 import uuid
 import webapp2
-
 from google.appengine.api import taskqueue
-
 from googleapiclient.discovery import build
 from oauth2client.appengine import AppAssertionCredentials
+import nv_vars  # pylint: disable=relative-import
 
-from controller import nv_vars
+STARTUP_SCRIPT_FILE = 'notebook_versioner.sh'
 
 
 def get_credentials():
@@ -24,10 +23,14 @@ def get_credentials():
 
 class CreateVM(webapp2.RequestHandler):
     """Handles the creation of instances."""
+
     def get(self):
         """Handles the creation of instances."""
         unique_id = str(uuid.uuid4())[:6]
-        instance_config = nv_vars.INSTANCE_CONFIG % unique_id
+        with open(STARTUP_SCRIPT_FILE, 'r') as ss_file:
+            startup_script = ss_file.read()
+        instance_config = nv_vars.INSTANCE_CONFIG % (
+            unique_id, json.dumps(startup_script))
 
         compute = get_credentials()
         compute.instances().insert(
@@ -44,6 +47,7 @@ class CreateVM(webapp2.RequestHandler):
 
 class DeleteVM(webapp2.RequestHandler):
     """Handles the deletion of instances."""
+
     def post(self):
         """Handles the deletion of instances."""
         name = self.request.get('name')
