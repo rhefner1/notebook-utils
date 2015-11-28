@@ -1,3 +1,5 @@
+"""Notebook versioner controller"""
+
 from httplib2 import Http
 import json
 import logging
@@ -5,15 +7,15 @@ import uuid
 import webapp2
 
 from google.appengine.api import taskqueue
-from google.appengine.api import urlfetch
 
-from apiclient.discovery import build
+from googleapiclient.discovery import build
 from oauth2client.appengine import AppAssertionCredentials
 
-import vars
+from controller import nv_vars
 
 
 def get_credentials():
+    """Authorizes a request to Google Cloud Platform."""
     credentials = AppAssertionCredentials(
         'https://www.googleapis.com/auth/cloud-platform')
     http_auth = credentials.authorize(Http())
@@ -21,38 +23,42 @@ def get_credentials():
 
 
 class CreateVM(webapp2.RequestHandler):
+    """Handles the creation of instances."""
     def get(self):
+        """Handles the creation of instances."""
         unique_id = str(uuid.uuid4())[:6]
-        instance_config = vars.INSTANCE_CONFIG % unique_id
+        instance_config = nv_vars.INSTANCE_CONFIG % unique_id
 
         compute = get_credentials()
         compute.instances().insert(
-            project=vars.PROJECT,
-            zone=vars.ZONE,
+            project=nv_vars.PROJECT,
+            zone=nv_vars.ZONE,
             body=json.loads(instance_config)).execute()
 
         taskqueue.add(url="/delete",
                       params={'name': "nv-worker-%s" % unique_id},
-                      countdown=vars.WAIT_FOR_VM_DELETE)
+                      countdown=nv_vars.WAIT_FOR_VM_DELETE)
 
         self.response.write('Done.')
 
 
 class DeleteVM(webapp2.RequestHandler):
+    """Handles the deletion of instances."""
     def post(self):
+        """Handles the deletion of instances."""
         name = self.request.get('name')
-        logging.info("Deleting instance id: %s" % name)
+        logging.info("Deleting instance id: %s", name)
 
         compute = get_credentials()
         compute.instances().delete(
-            project=vars.PROJECT,
-            zone=vars.ZONE,
+            project=nv_vars.PROJECT,
+            zone=nv_vars.ZONE,
             instance=name).execute()
 
         self.response.write('Done.')
 
 
-app = webapp2.WSGIApplication([
+APP = webapp2.WSGIApplication([
     ('/create', CreateVM),
     ('/delete', DeleteVM),
 ], debug=True)

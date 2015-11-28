@@ -1,3 +1,4 @@
+"""Variables for Notebook Versioner"""
 
 PROJECT = 'notebook-versioner'
 ZONE = 'us-east1-b'

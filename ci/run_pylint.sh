@@ -8,5 +8,5 @@ then
     echo "Current PYTHONPATH: ${PYTHONPATH}"
 
     echo -e "\n### Running pylint"
-    pylint ./controller --ignore lib
+    pylint ./controller --ignore lib --disable=no-member
 fi

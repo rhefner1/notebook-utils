@@ -6,5 +6,5 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: nv_control.app
+  script: nv_control.APP
   login: admin
