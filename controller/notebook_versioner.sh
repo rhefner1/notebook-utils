@@ -24,6 +24,9 @@ wait_for_dropbox() {
 
 echo "Starting notebook versioner."
 
+# Making sure we have the right timezone
+cp /usr/share/zoneinfo/America/New_York /etc/localtime
+
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
 
