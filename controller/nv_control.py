@@ -1,13 +1,15 @@
 """Notebook versioner controller"""
 
-from httplib2 import Http
 import json
 import logging
 import uuid
 import webapp2
-from google.appengine.api import taskqueue
+
+from httplib2 import Http
 from googleapiclient.discovery import build
 from oauth2client.appengine import AppAssertionCredentials
+from google.appengine.api import taskqueue
+
 import nv_vars  # pylint: disable=relative-import
 
 STARTUP_SCRIPT_FILE = 'notebook_versioner.sh'
