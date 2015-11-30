@@ -7,7 +7,7 @@ Here's the flow of the application:
 
 1. Google App Engine's cron service sends a web request at the end of each day.
 2. A web handler on App Engine (**controller**) receives the request and sends an API call to spin up a Google Compute Engine virtual machine. It also schedules the termination of the instance 1 hour later.
-3. The Compute Engine VM (**worker**) executes a script to do the following:
+3. The Compute Engine VM is passed a startup script to do the following:
   - Starts the Dropbox daemon to sync the latest notebook files
   - Creates a new commit and pushes to GitHub
   - Waits for the new files to sync back to Dropbox
@@ -24,8 +24,5 @@ Here's the flow of the application:
   - Download the CLI interface: `wget -O ./dropbox.py "https://www.dropbox.com/download?dl=packages/dropbox.py" && chmod +x ./dropbox.py`
   - Run to ignore other folders: `./dropbox.py exclude add ~/Dropbox/apps ~/Dropbox/docs ~/Dropbox/git ~/Dropbox/music ~/Dropbox/photos ~/Dropbox/Public ~/Dropbox/school`
 3. Install necessary packages: `yum install git wget`
-4. Copy the notebook versioner bash script (on host): `scp ./notebook_versioner.sh [ip]:~`
-5. Move the script: `mv /home/rhefner/notebook_versioner.sh /root && chmod +x /root/notebook_versioner.sh`
-6. Create ssh keypair: `ssh-keygen` (and add that to GitHub)
-7. Try out the script to make sure it works! As long as the VM runs `/root/notebook_versioner.sh`, Dropbox will automatically be started, synced and the notebook changes will be pushed.
-
+4. Create ssh keypair: `ssh-keygen` (and add that to GitHub)
+5. Try out the script to make sure it works! As long as the `notebook_versioner.sh` is passed to the VM as the startup script, Dropbox will automatically be started, synced and the notebook changes will be pushed.
