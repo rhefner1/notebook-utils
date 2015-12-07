@@ -34,8 +34,11 @@ DATE="$(date +'%Y-%m-%d')"
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
 
-echo "Commiting and pushing..."
+# Converting all tabs to spaces
 cd /root/Dropbox/notebook
+find . -name '*.md' ! -type d -exec bash -c 'expand -t 2 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+
+echo "Commiting and pushing..."
 git config core.fileMode false
 git add --all
 git commit -m ${DATE} --author "Ryan Hefner <rhefner1@gmail.com>"
