@@ -9,7 +9,7 @@ wait_for_dropbox() {
   while [ "$(/root/dropbox.py status)" != 'Up to date' ]
   do
     let i+=1
-    if [ "$i" -ge 150 ]
+    if [ "$i" -ge 900 ]
       then
         echo "Dropbox timed out. Exiting..."
         exit 1
