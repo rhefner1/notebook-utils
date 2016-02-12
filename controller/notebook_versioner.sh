@@ -29,7 +29,7 @@ cp /usr/share/zoneinfo/America/New_York /etc/localtime
 
 # And saving the variable earlier in the script so we don't
 # cross over into the next day before Dropbox is finished syncing
-DATE="$(date +'%Y-%m-%d')"
+DATE="$(date -d "yesterday" +'%Y-%m-%d')"
 
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
