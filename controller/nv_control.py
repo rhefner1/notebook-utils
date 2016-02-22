@@ -7,7 +7,7 @@ import webapp2
 
 from httplib2 import Http
 from googleapiclient.discovery import build
-from oauth2client.appengine import AppAssertionCredentials
+from oauth2client.contrib.appengine import AppAssertionCredentials
 from google.appengine.api import taskqueue
 
 import nv_vars  # pylint: disable=relative-import
