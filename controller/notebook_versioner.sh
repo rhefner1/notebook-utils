@@ -34,9 +34,13 @@ DATE="$(date -d "yesterday" +'%Y-%m-%d')"
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
 
-# Converting all tabs to spaces
 cd /root/Dropbox/notebook
+
+# Converting all tabs to spaces
 find . -name '*.md' ! -type d -exec bash -c 'expand -t 2 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+
+# Trimming whitespace from files
+find . -type f -name '*.md' -exec sed --in-place 's/[[:space:]]\+$//' {} \+
 
 echo "Commiting and pushing..."
 git config core.fileMode false
