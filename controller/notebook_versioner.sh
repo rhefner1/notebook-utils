@@ -42,6 +42,9 @@ find . -name '*.md' ! -type d -exec bash -c 'expand -t 2 "$0" > /tmp/e && mv /tm
 # Trimming whitespace from files
 find . -type f -name '*.md' -exec sed --in-place 's/[[:space:]]\+$//' {} \+
 
+# Add newlines if they don't exist
+find . -type f -name '*.md' -exec sed -i -e '$a\' {} \+
+
 echo "Commiting and pushing..."
 git config core.fileMode false
 git add --all
