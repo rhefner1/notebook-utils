@@ -8,3 +8,7 @@ handlers:
 - url: /.*
   script: nv_control.APP
   login: admin
+
+libraries:
+- name: ssl
+  version: latest
