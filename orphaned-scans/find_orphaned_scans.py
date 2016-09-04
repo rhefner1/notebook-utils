@@ -10,7 +10,7 @@ def main():
         return
 
     filename = filename[filename.find('Scan'):]
-    grep_cmd = "grep -R '%s' %s" % (filename, NOTEBOOK_DIRECTORY)
+    grep_cmd = "grep -R --exclude-dir='.git' '%s' %s" % (filename, NOTEBOOK_DIRECTORY)
     try:
         subprocess.check_output(grep_cmd, shell=True)
     except subprocess.CalledProcessError:
