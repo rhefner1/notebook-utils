@@ -37,7 +37,7 @@ wait_for_dropbox
 cd /root/Dropbox/notebook
 
 # Converting all tabs to spaces
-find . -name '*.md' ! -type d -exec bash -c 'expand -t 2 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+find . -name '*.md' ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
 
 # Trimming whitespace from files
 find . -type f -name '*.md' -exec sed --in-place 's/[[:space:]]\+$//' {} \+
