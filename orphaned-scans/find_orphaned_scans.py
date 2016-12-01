@@ -7,7 +7,7 @@ NOTEBOOK_DIRECTORY = '/home/rhefner/Dropbox/notebook'
 def main():
     for filename in sys.argv[1:]:
         if 'Scan' not in filename:
-            return
+            continue
 
         filename = filename[filename.find('Scan'):]
         grep_cmd = "grep -R --exclude-dir='.git' '%s' %s" % (filename, NOTEBOOK_DIRECTORY)
