@@ -2,11 +2,11 @@
 
 wait_for_dropbox() {
   echo "Starting dropboxd"
-  /root/dropbox.py start
+  ~/.notebook/dropbox.py start
 
   echo "Waiting for Dropbox to sync..."
   i=0
-  while [ "$(/root/dropbox.py status)" != 'Up to date' ]
+  while [ "$(~/.notebook/dropbox.py status)" != 'Up to date' ]
   do
     let i+=1
     if [ "$i" -ge 900 ]
@@ -17,9 +17,7 @@ wait_for_dropbox() {
     sleep 2;
 
   done
-
-  echo "Stopping dropboxd"
-  /root/dropbox.py stop
+  ~/.notebook/dropbox.py stop
 }
 
 echo "Starting notebook versioner."
@@ -34,7 +32,7 @@ DATE="$(date -d "yesterday" +'%Y-%m-%d')"
 # Wait until Dropbox is finished syncing before doing the commit
 wait_for_dropbox
 
-cd /root/Dropbox/notebook
+cd ~/Dropbox/notebook
 
 # Converting all tabs to spaces
 find . -name '*.md' ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
@@ -54,4 +52,3 @@ git push origin master
 # Wait until Dropbox is finished syncing before finishing
 wait_for_dropbox
 
-shutdown -h now
