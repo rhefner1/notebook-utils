@@ -2,11 +2,11 @@
 
 wait_for_dropbox() {
   echo "Starting dropboxd"
-  ~/.notebook/dropbox.py start
+  dropbox start
 
   echo "Waiting for Dropbox to sync..."
   i=0
-  while [ "$(~/.notebook/dropbox.py status)" != 'Up to date' ]
+  while [ "$(dropbox status)" != 'Up to date' ]
   do
     let i+=1
     if [ "$i" -ge 900 ]
@@ -17,7 +17,7 @@ wait_for_dropbox() {
     sleep 2;
 
   done
-  ~/.notebook/dropbox.py stop
+  dropbox stop
 }
 
 echo "Starting notebook versioner."
@@ -51,4 +51,3 @@ git push origin master
 
 # Wait until Dropbox is finished syncing before finishing
 wait_for_dropbox
-
