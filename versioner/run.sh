@@ -23,7 +23,7 @@ wait_for_dropbox() {
 echo "Starting notebook versioner."
 
 # Making sure we have the right timezone
-cp /usr/share/zoneinfo/America/New_York /etc/localtime
+sudo timedatectl set-timezone Europe/Prague
 
 # And saving the variable earlier in the script so we don't
 # cross over into the next day before Dropbox is finished syncing
